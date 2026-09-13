@@ -311,6 +311,32 @@
     </form>
 
     <p class="signup" id="switchHint">¿No tienes cuenta? <a id="goRegister">Regístrate</a></p>
+
+    <!-- Forgot Password Form (step 1: request reset link) -->
+    <form class="form hidden" id="forgotForm" novalidate>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:.75rem">Ingresa tu usuario o correo y te enviaremos un enlace para restablecer tu contraseña.</p>
+      <div class="field">
+        <label for="forgotIdentifier">Usuario / Correo</label>
+        <input type="text" id="forgotIdentifier" name="identifier" autocomplete="username" placeholder="correo@ejemplo.gt o usuario" required>
+      </div>
+      <button type="submit" class="btn" id="forgotBtn">Enviar enlace</button>
+      <p class="signup"><a id="backToLoginFromForgot">Volver a iniciar sesión</a></p>
+    </form>
+
+    <!-- Reset Password Form (step 2: set new password, shown via ?reset_token=...) -->
+    <form class="form hidden" id="resetForm" novalidate>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:.75rem">Ingresa tu nueva contraseña.</p>
+      <div class="field">
+        <label for="resetPassword">Nueva contraseña</label>
+        <input type="password" id="resetPassword" name="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres" required minlength="6">
+      </div>
+      <div class="field">
+        <label for="resetPasswordConfirm">Confirma la contraseña</label>
+        <input type="password" id="resetPasswordConfirm" name="passwordConfirm" autocomplete="new-password" placeholder="Repite la contraseña" required minlength="6">
+      </div>
+      <button type="submit" class="btn" id="resetBtn">Guardar nueva contraseña</button>
+      <p class="signup"><a id="backToLoginFromReset">Volver a iniciar sesión</a></p>
+    </form>
   </section>
 
   <!-- Dashboard (shown after successful login) -->
@@ -353,6 +379,10 @@ const switchHint = document.getElementById('switchHint');
 const forgotLink = document.getElementById('forgotLink');
 const userTag = document.getElementById('userTag');
 const logoutBtn = document.getElementById('logoutBtn');
+const forgotForm = document.getElementById('forgotForm');
+const resetForm = document.getElementById('resetForm');
+const backToLoginFromForgot = document.getElementById('backToLoginFromForgot');
+const backToLoginFromReset = document.getElementById('backToLoginFromReset');
 
 function showAlert(message, type) {
   alertBox.textContent = message;
@@ -366,8 +396,11 @@ function clearAlert() {
 function showLoginTab() {
   loginForm.classList.remove('hidden');
   registerForm.classList.add('hidden');
+  forgotForm.classList.add('hidden');
+  resetForm.classList.add('hidden');
   loginTabBtn.classList.add('active'); loginTabBtn.setAttribute('aria-selected', 'true');
   registerTabBtn.classList.remove('active'); registerTabBtn.setAttribute('aria-selected', 'false');
+  switchHint.classList.remove('hidden');
   switchHint.innerHTML = '¿No tienes cuenta? <a id="goRegister">Regístrate</a>';
   document.getElementById('goRegister').addEventListener('click', showRegisterTab);
   clearAlert();
@@ -375,19 +408,44 @@ function showLoginTab() {
 function showRegisterTab() {
   registerForm.classList.remove('hidden');
   loginForm.classList.add('hidden');
+  forgotForm.classList.add('hidden');
+  resetForm.classList.add('hidden');
   registerTabBtn.classList.add('active'); registerTabBtn.setAttribute('aria-selected', 'true');
   loginTabBtn.classList.remove('active'); loginTabBtn.setAttribute('aria-selected', 'false');
+  switchHint.classList.remove('hidden');
   switchHint.innerHTML = '¿Ya tienes cuenta? <a id="goLogin">Inicia sesión</a>';
   document.getElementById('goLogin').addEventListener('click', showLoginTab);
+  clearAlert();
+}
+
+function showForgotTab() {
+  loginForm.classList.add('hidden');
+  registerForm.classList.add('hidden');
+  resetForm.classList.add('hidden');
+  forgotForm.classList.remove('hidden');
+  loginTabBtn.classList.remove('active'); loginTabBtn.setAttribute('aria-selected', 'false');
+  registerTabBtn.classList.remove('active'); registerTabBtn.setAttribute('aria-selected', 'false');
+  switchHint.classList.add('hidden');
+  clearAlert();
+}
+
+function showResetTab() {
+  loginForm.classList.add('hidden');
+  registerForm.classList.add('hidden');
+  forgotForm.classList.add('hidden');
+  resetForm.classList.remove('hidden');
+  loginTabBtn.classList.remove('active'); loginTabBtn.setAttribute('aria-selected', 'false');
+  registerTabBtn.classList.remove('active'); registerTabBtn.setAttribute('aria-selected', 'false');
+  switchHint.classList.add('hidden');
   clearAlert();
 }
 
 loginTabBtn.addEventListener('click', showLoginTab);
 registerTabBtn.addEventListener('click', showRegisterTab);
 goRegister.addEventListener('click', showRegisterTab);
-forgotLink.addEventListener('click', () => {
-  showAlert('Contacta al administrador para restablecer tu contraseña.', 'error');
-});
+forgotLink.addEventListener('click', showForgotTab);
+backToLoginFromForgot.addEventListener('click', showLoginTab);
+backToLoginFromReset.addEventListener('click', showLoginTab);
 
 function enterDashboard(user) {
   sessionUser = user;
@@ -473,6 +531,67 @@ registerForm.addEventListener('submit', async e => {
     showAlert(err.message, 'error');
   }
 });
+
+forgotForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  clearAlert();
+  const btn = document.getElementById('forgotBtn');
+  const identifier = document.getElementById('forgotIdentifier').value;
+
+  btn.disabled = true; btn.textContent = 'Enviando…';
+  try {
+    const data = await apiRequest('/api/auth/request-reset', {
+      method: 'POST',
+      body: JSON.stringify({ identifier }),
+    });
+    showAlert(data.message, 'success');
+    forgotForm.reset();
+  } catch (err) {
+    showAlert(err.message, 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Enviar enlace';
+  }
+});
+
+resetForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  clearAlert();
+  const btn = document.getElementById('resetBtn');
+  const password = document.getElementById('resetPassword').value;
+  const passwordConfirm = document.getElementById('resetPasswordConfirm').value;
+  const token = new URLSearchParams(window.location.search).get('reset_token');
+
+  if (password !== passwordConfirm) {
+    showAlert('Las contraseñas no coinciden.', 'error');
+    return;
+  }
+  if (!token) {
+    showAlert('Enlace de restablecimiento inválido. Solicita uno nuevo.', 'error');
+    return;
+  }
+
+  btn.disabled = true; btn.textContent = 'Guardando…';
+  try {
+    const data = await apiRequest('/api/auth/confirm-reset', {
+      method: 'POST',
+      body: JSON.stringify({ token, password }),
+    });
+    showAlert(data.message, 'success');
+    resetForm.reset();
+    window.history.replaceState({}, document.title, window.location.pathname);
+    setTimeout(showLoginTab, 1500);
+  } catch (err) {
+    showAlert(err.message, 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Guardar nueva contraseña';
+  }
+});
+
+// If the page was opened from a reset-password email link, jump straight to the reset form.
+(function checkForResetToken() {
+  const token = new URLSearchParams(window.location.search).get('reset_token');
+  if (token) showResetTab();
+})();
 </script>
 </body>
 </html>
