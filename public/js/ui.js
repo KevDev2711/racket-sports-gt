@@ -9,6 +9,11 @@ export const alertBox = document.getElementById('alertBox');
 
 export const loginForm = document.getElementById('loginForm');
 export const registerForm = document.getElementById('registerForm');
+export const photoChooseBtn = document.getElementById('photoChooseBtn');
+export const registerPhoto = document.getElementById('registerPhoto');
+export const photoPreview = document.getElementById('photoPreview');
+export const photoPreviewImg = document.getElementById('photoPreviewImg');
+export const photoPlaceholderIcon = document.getElementById('photoPlaceholderIcon');
 export const loginTabBtn = document.getElementById('loginTabBtn');
 export const registerTabBtn = document.getElementById('registerTabBtn');
 export const switchHint = document.getElementById('switchHint');
@@ -81,7 +86,7 @@ export function showResetTab() {
 export function enterDashboard(user) {
   authCard.style.display = 'none';
   dashboard.classList.add('show');
-  userTag.textContent = user.displayName || user.identifier;
+  userTag.textContent = user.alias || user.username || user.displayName || user.email;
 }
 
 export function exitDashboard() {
@@ -89,5 +94,18 @@ export function exitDashboard() {
   authCard.style.display = '';
   loginForm.reset();
   registerForm.reset();
+  resetPhotoPreview();
   showLoginTab();
+}
+
+export function showPhotoPreview(dataUrl) {
+  photoPreviewImg.src = dataUrl;
+  photoPreviewImg.classList.remove('hidden');
+  photoPlaceholderIcon.classList.add('hidden');
+}
+
+export function resetPhotoPreview() {
+  photoPreviewImg.src = '';
+  photoPreviewImg.classList.add('hidden');
+  photoPlaceholderIcon.classList.remove('hidden');
 }

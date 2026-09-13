@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
 
     const { data: user, error } = await supabase
       .from("users")
-      .select("id, identifier, display_name")
+      .select("id, email, username, alias, first_name, last_name, display_name, photo_url")
       .eq("id", payload.sub)
       .maybeSingle();
 
@@ -23,7 +23,16 @@ module.exports = async (req, res) => {
     if (!user) return res.status(404).json({ error: "Usuario no encontrado." });
 
     return res.status(200).json({
-      user: { id: user.id, identifier: user.identifier, displayName: user.display_name },
+      user: {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        alias: user.alias,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        displayName: user.display_name,
+        photoUrl: user.photo_url,
+      },
     });
   } catch (err) {
     return res.status(401).json({ error: "Sesión inválida o expirada." });

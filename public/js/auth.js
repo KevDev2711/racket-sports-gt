@@ -9,9 +9,13 @@ import {
   loginForm, registerForm, loginTabBtn, registerTabBtn,
   forgotLink, logoutBtn, forgotForm, resetForm,
   backToLoginFromForgot, backToLoginFromReset,
+  photoChooseBtn, registerPhoto,
   showAlert, clearAlert, showLoginTab, showRegisterTab, showForgotTab, showResetTab,
-  enterDashboard, exitDashboard,
+  enterDashboard, exitDashboard, showPhotoPreview, resetPhotoPreview,
 } from './ui.js';
+
+const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
+const ALLOWED_PHOTO_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
 
 // ── Tab / navigation wiring ──
 loginTabBtn.addEventListener('click', showLoginTab);
@@ -23,6 +27,29 @@ backToLoginFromReset.addEventListener('click', showLoginTab);
 logoutBtn.addEventListener('click', () => {
   clearSession();
   exitDashboard();
+});
+
+// ── Profile photo picker (register form) ──
+photoChooseBtn.addEventListener('click', () => registerPhoto.click());
+registerPhoto.addEventListener('change', () => {
+  clearAlert();
+  const file = registerPhoto.files[0];
+  if (!file) { resetPhotoPreview(); return; }
+  if (!ALLOWED_PHOTO_TYPES.includes(file.type)) {
+    showAlert('La foto debe ser PNG, JPG o WEBP.', 'error');
+    registerPhoto.value = '';
+    resetPhotoPreview();
+    return;
+  }
+  if (file.size > MAX_PHOTO_BYTES) {
+    showAlert('La foto debe pesar máximo 5 MB.', 'error');
+    registerPhoto.value = '';
+    resetPhotoPreview();
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = () => showPhotoPreview(reader.result);
+  reader.readAsDataURL(file);
 });
 
 // ── Login ──
@@ -53,13 +80,29 @@ registerForm.addEventListener('submit', async e => {
   e.preventDefault();
   clearAlert();
   const btn = document.getElementById('registerBtn');
-  const displayName = document.getElementById('registerName').value;
-  const identifier = document.getElementById('registerIdentifier').value;
+  const firstName = document.getElementById('registerFirstName').value;
+  const lastName = document.getElementById('registerLastName').value;
+  const username = document.getElementById('registerUsername').value;
+  const alias = document.getElementById('registerAlias').value;
+  const email = document.getElementById('registerEmail').value;
   const password = document.getElementById('registerPassword').value;
+  const passwordConfirm = document.getElementById('registerPasswordConfirm').value;
+  const photoFile = registerPhoto.files[0] || null;
+
+  if (password !== passwordConfirm) {
+    showAlert('Las contraseñas no coinciden.', 'error');
+    return;
+  }
 
   btn.disabled = true; btn.textContent = 'Creando cuenta…';
   try {
-    const data = await api.register(displayName, identifier, password);
+    let photoUrl = null;
+    if (photoFile) {
+      btn.textContent = 'Subiendo foto…';
+      photoUrl = await api.uploadProfilePhoto(photoFile);
+      btn.textContent = 'Creando cuenta…';
+    }
+    const data = await api.register({ firstName, lastName, username, alias, email, password, photoUrl });
     setSession(data.token, data.user);
     btn.textContent = '¡Cuenta creada!';
     setTimeout(() => {
