@@ -186,8 +186,9 @@
   <!-- Dashboard (shown after successful login) -->
   <section class="dashboard" id="dashboard" aria-labelledby="welcome-title">
     <div class="welcome-card">
-      <div class="ball-wrap">
-        <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#fff" stroke="#ddd" stroke-width="1.5"/><circle cx="24" cy="24" r="14" fill="none" stroke="#ccc" stroke-width="1" stroke-dasharray="4 2"/><text x="24" y="29" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="bold" fill="#999">★★★</text></svg>
+      <div class="ball-wrap" id="dashboardAvatarWrap">
+        <svg id="dashboardAvatarIcon" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#fff" stroke="#ddd" stroke-width="1.5"/><circle cx="24" cy="24" r="14" fill="none" stroke="#ccc" stroke-width="1" stroke-dasharray="4 2"/><text x="24" y="29" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="bold" fill="#999">★★★</text></svg>
+        <img id="dashboardAvatarImg" class="hidden" alt="Foto de perfil" />
       </div>
       <h1 id="welcome-title">¡Bienvenido de vuelta!</h1>
       <p>Ya iniciaste sesión en Racket Sports GT — Tenis de Mesa.</p>

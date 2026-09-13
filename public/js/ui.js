@@ -19,6 +19,8 @@ export const registerTabBtn = document.getElementById('registerTabBtn');
 export const switchHint = document.getElementById('switchHint');
 export const forgotLink = document.getElementById('forgotLink');
 export const userTag = document.getElementById('userTag');
+export const dashboardAvatarIcon = document.getElementById('dashboardAvatarIcon');
+export const dashboardAvatarImg = document.getElementById('dashboardAvatarImg');
 export const logoutBtn = document.getElementById('logoutBtn');
 export const forgotForm = document.getElementById('forgotForm');
 export const resetForm = document.getElementById('resetForm');
@@ -87,6 +89,19 @@ export function enterDashboard(user) {
   authCard.style.display = 'none';
   dashboard.classList.add('show');
   userTag.textContent = user.alias || user.username || user.displayName || user.email;
+  if (user.photoUrl) {
+    dashboardAvatarImg.src = user.photoUrl;
+    dashboardAvatarImg.classList.remove('hidden');
+    dashboardAvatarIcon.style.display = 'none';
+  } else {
+    resetDashboardAvatar();
+  }
+}
+
+export function resetDashboardAvatar() {
+  dashboardAvatarImg.classList.add('hidden');
+  dashboardAvatarImg.removeAttribute('src');
+  dashboardAvatarIcon.style.display = '';
 }
 
 export function exitDashboard() {
@@ -95,6 +110,7 @@ export function exitDashboard() {
   loginForm.reset();
   registerForm.reset();
   resetPhotoPreview();
+  resetDashboardAvatar();
   showLoginTab();
 }
 
