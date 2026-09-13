@@ -145,7 +145,7 @@
   }
   .photo-preview svg{width:38px; height:38px; stroke:var(--accent); stroke-width:2; fill:none}
   .photo-preview img{width:100%; height:100%; object-fit:cover; display:block}
-  .photo-preview img.hidden{display:none}
+  .photo-preview .hidden{display:none}
   .photo-choose-btn{
     background:var(--accent-weak); color:var(--accent); border:1px solid color-mix(in srgb, var(--accent) 35%, transparent);
     border-radius:8px; padding:.5rem 1rem; font-size:.85rem; font-weight:700; cursor:pointer;
