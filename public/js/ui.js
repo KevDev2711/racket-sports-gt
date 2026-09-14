@@ -235,24 +235,28 @@ export function addGameRow(index) {
   const row = document.createElement('div');
   row.className = 'game-row';
   row.dataset.index = index;
+
   row.innerHTML = `
-    <span>Set ${index + 1}</span>
-    <input type="number" min="0" max="99" placeholder="J1" class="game-p1" required>
-    <input type="number" min="0" max="99" placeholder="J2" class="game-p2" required>
-    <button type="button" class="game-remove" aria-label="Quitar set">&times;</button>
+    <span>Match ${index + 1}</span>
+    <input type="number" min="0" max="99" placeholder="SETS J1" class="game-p1" required>
+    <input type="number" min="0" max="99" placeholder="SETS J2" class="game-p2" required>
+    <button type="button" class="game-remove" aria-label="Quitar match">&times;</button>
   `;
+
   gamesList.appendChild(row);
+
   row.querySelector('.game-remove').addEventListener('click', () => {
     row.remove();
     renumberGameRows();
   });
+
   return row;
 }
 
 export function renumberGameRows() {
   gamesList.querySelectorAll('.game-row').forEach((row, idx) => {
     row.dataset.index = idx;
-    row.querySelector('span').textContent = `Set ${idx + 1}`;
+    row.querySelector('span').textContent = `Match ${idx + 1}`;
   });
 }
 
