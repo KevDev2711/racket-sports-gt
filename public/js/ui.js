@@ -208,7 +208,7 @@ export function renderMatchList(matches) {
     const dateLabel = new Date(m.matchDate + 'T00:00:00').toLocaleDateString('es-GT', {
       day: 'numeric', month: 'short', year: 'numeric',
     });
-    const gamesPills = m.games.map((g) => `<span class="match-game-pill">Set ${g.gameNumber}: ${g.player1Score}-${g.player2Score}</span>`).join('');
+    const gamesPills = m.games.map((g) => `<span class="match-game-pill">Match ${g.gameNumber}: ${g.player1Score}-${g.player2Score}</span>`).join('');
     card.innerHTML = `
       <div class="match-date">${escapeHtml(dateLabel)}</div>
       <div class="match-players">
