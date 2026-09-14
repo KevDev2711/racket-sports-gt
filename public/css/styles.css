@@ -303,3 +303,23 @@
     .mesh span{animation:none}
     .login-card,.welcome-card{animation:none}
   }
+
+/* Smaller scoreboards for the sets inside the modal */
+.game-row {
+  grid-template-columns: 42px 118px 118px 34px;
+  gap: 8px;
+  justify-content: start;
+}
+
+.game-row input {
+  width: 118px;
+  height: 38px;
+  padding: 0 8px;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.game-row input::placeholder {
+  font-size: 0.7rem;
+  opacity: 0.75;
+}
