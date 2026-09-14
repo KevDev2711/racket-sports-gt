@@ -33,8 +33,8 @@
     position:absolute; border-radius:50%; filter:blur(120px); opacity:.5; animation:float 20s infinite ease-in-out;
   }
   .mesh span:nth-child(1){width:60vmax; height:60vmax; top:-15vmax; left:-15vmax; background:var(--accent); animation-delay:0s}
-  .mesh span:nth-child(2){width:50vmax; height:50vmax; bottom:-10vmax; right:-10vmax; background:#2563eb; animation-delay:-7s}
-  .mesh span:nth-child(3){width:35vmax; height:35vmax; top:25vmax; left:35vmax; background:#f43f5e; animation-delay:-14s}
+  .mesh span:nth-child(2){width:50vmax; height:50vmax; bottom:-10vmax; right:-10vmax; background:#065f46; animation-delay:-7s}
+  .mesh span:nth-child(3){width:35vmax; height:35vmax; top:25vmax; left:35vmax; background:#84cc16; animation-delay:-14s}
   @keyframes float{
     0%,100%{transform:translate(0,0) scale(1)}
     25%{transform:translate(5vmax,-3vmax) scale(1.05)}
