@@ -308,9 +308,15 @@
 /* Score rows: compact inputs aligned to the right */
 .game-row {
   display: grid;
-  grid-template-columns: 42px 1fr 118px 118px 34px;
+  grid-template-columns: 68px 1fr 118px 118px 34px;
   gap: 8px;
   align-items: center;
+}
+.game-row > span {
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 .game-row input {
   width: 100%;
