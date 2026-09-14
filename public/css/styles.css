@@ -332,9 +332,11 @@
 .game-row .game-p1 {
   grid-column: 3;
 }
+
 .game-row .game-p2 {
-  grid-column: 3;
+  grid-column: 4;
 }
+
 .game-row .game-remove {
   grid-column: 5;
 }
