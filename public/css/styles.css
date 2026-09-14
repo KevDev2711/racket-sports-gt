@@ -347,20 +347,29 @@
   grid-column: 5;
 }
 
-/* Evita que el dashboard ancho se salga de la pantalla en teléfonos */
+/* Dashboard wide adjustment for cellphones */
+
 @media (max-width: 600px) {
   .shell,
   .shell.wide {
-    width: calc(100vw - 24px);
-    max-width: none;
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
     min-width: 0;
-    margin-inline: auto;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box;
+  }
+
+  .dashboard,
+  .dash-panel,
+  .table-wrap {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     box-sizing: border-box;
   }
 
   .table-wrap {
-    width: 100%;
-    max-width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
