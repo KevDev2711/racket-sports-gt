@@ -9,11 +9,18 @@ export const alertBox = document.getElementById('alertBox');
 
 export const loginForm = document.getElementById('loginForm');
 export const registerForm = document.getElementById('registerForm');
+export const photoChooseBtn = document.getElementById('photoChooseBtn');
+export const registerPhoto = document.getElementById('registerPhoto');
+export const photoPreview = document.getElementById('photoPreview');
+export const photoPreviewImg = document.getElementById('photoPreviewImg');
+export const photoPlaceholderIcon = document.getElementById('photoPlaceholderIcon');
 export const loginTabBtn = document.getElementById('loginTabBtn');
 export const registerTabBtn = document.getElementById('registerTabBtn');
 export const switchHint = document.getElementById('switchHint');
 export const forgotLink = document.getElementById('forgotLink');
 export const userTag = document.getElementById('userTag');
+export const dashboardAvatarIcon = document.getElementById('dashboardAvatarIcon');
+export const dashboardAvatarImg = document.getElementById('dashboardAvatarImg');
 export const logoutBtn = document.getElementById('logoutBtn');
 export const forgotForm = document.getElementById('forgotForm');
 export const resetForm = document.getElementById('resetForm');
@@ -81,7 +88,20 @@ export function showResetTab() {
 export function enterDashboard(user) {
   authCard.style.display = 'none';
   dashboard.classList.add('show');
-  userTag.textContent = user.displayName || user.identifier;
+  userTag.textContent = user.alias || user.username || user.displayName || user.email;
+  if (user.photoUrl) {
+    dashboardAvatarImg.src = user.photoUrl;
+    dashboardAvatarImg.classList.remove('hidden');
+    dashboardAvatarIcon.style.display = 'none';
+  } else {
+    resetDashboardAvatar();
+  }
+}
+
+export function resetDashboardAvatar() {
+  dashboardAvatarImg.classList.add('hidden');
+  dashboardAvatarImg.removeAttribute('src');
+  dashboardAvatarIcon.style.display = '';
 }
 
 export function exitDashboard() {
@@ -89,5 +109,19 @@ export function exitDashboard() {
   authCard.style.display = '';
   loginForm.reset();
   registerForm.reset();
+  resetPhotoPreview();
+  resetDashboardAvatar();
   showLoginTab();
+}
+
+export function showPhotoPreview(dataUrl) {
+  photoPreviewImg.src = dataUrl;
+  photoPreviewImg.classList.remove('hidden');
+  photoPlaceholderIcon.classList.add('hidden');
+}
+
+export function resetPhotoPreview() {
+  photoPreviewImg.src = '';
+  photoPreviewImg.classList.add('hidden');
+  photoPlaceholderIcon.classList.remove('hidden');
 }

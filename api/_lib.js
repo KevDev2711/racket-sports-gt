@@ -34,10 +34,28 @@ function normalizeIdentifier(raw) {
   return String(raw || "").trim().toLowerCase();
 }
 
+function isValidEmail(raw) {
+  // Disallow characters that have special meaning in PostgREST filter
+  // strings (`,` `(` `)`) so email can never break out of an `.or(...)` filter.
+  return /^[^\s@,()]+@[^\s@,()]+\.[^\s@,()]+$/.test(String(raw || "").trim());
+}
+
+function isValidUsername(raw) {
+  return /^[a-zA-Z0-9_]{3,24}$/.test(String(raw || "").trim());
+}
+
 function setCors(res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 }
 
-module.exports = { getSupabase, signToken, verifyToken, normalizeIdentifier, setCors };
+module.exports = {
+  getSupabase,
+  signToken,
+  verifyToken,
+  normalizeIdentifier,
+  isValidEmail,
+  isValidUsername,
+  setCors,
+};

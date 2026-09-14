@@ -101,17 +101,54 @@
 
     <!-- Register Form -->
     <form class="form hidden" id="registerForm" novalidate>
-      <div class="field">
-        <label for="registerName">Nombre / Jugador</label>
-        <input type="text" id="registerName" name="displayName" autocomplete="name" placeholder="Tu nombre" required>
+      <div class="photo-field">
+        <label class="photo-field-label">Foto de perfil <span class="optional-tag">(opcional)</span></label>
+        <div class="photo-dropzone">
+          <div class="photo-preview" id="photoPreview">
+            <svg viewBox="0 0 24 24" id="photoPlaceholderIcon"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <img id="photoPreviewImg" class="hidden" alt="Vista previa de la foto de perfil">
+          </div>
+          <button type="button" class="photo-choose-btn" id="photoChooseBtn">Elegir foto</button>
+          <input type="file" id="registerPhoto" name="photo" accept="image/png,image/jpeg,image/webp" class="visually-hidden">
+          <small>PNG, JPG o WEBP · Máximo 5 MB</small>
+        </div>
       </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="registerFirstName">Nombre</label>
+          <input type="text" id="registerFirstName" name="firstName" autocomplete="given-name" placeholder="Tu nombre" required>
+        </div>
+        <div class="field">
+          <label for="registerLastName">Apellido</label>
+          <input type="text" id="registerLastName" name="lastName" autocomplete="family-name" placeholder="Tu apellido" required>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="registerUsername">Username</label>
+          <input type="text" id="registerUsername" name="username" autocomplete="username" placeholder="ej. kevin_castillo" pattern="[a-zA-Z0-9_]{3,24}" required>
+          <small>Único. Usa letras, números y guion bajo.</small>
+        </div>
+        <div class="field">
+          <label for="registerAlias">Alias <span class="optional-tag">(opcional)</span></label>
+          <input type="text" id="registerAlias" name="alias" autocomplete="nickname" placeholder="ej. Kev" pattern="[a-zA-Z0-9_]{3,24}">
+          <small>Si lo usas, también será único.</small>
+        </div>
+      </div>
+
       <div class="field">
-        <label for="registerIdentifier">Usuario / Correo</label>
-        <input type="text" id="registerIdentifier" name="identifier" autocomplete="username" placeholder="correo@ejemplo.gt o usuario" required>
+        <label for="registerEmail">Correo Electrónico</label>
+        <input type="email" id="registerEmail" name="email" autocomplete="email" placeholder="correo@ejemplo.gt" required>
       </div>
       <div class="field">
         <label for="registerPassword">Contraseña</label>
         <input type="password" id="registerPassword" name="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres" required minlength="6">
+      </div>
+      <div class="field">
+        <label for="registerPasswordConfirm">Confirmar Contraseña</label>
+        <input type="password" id="registerPasswordConfirm" name="passwordConfirm" autocomplete="new-password" placeholder="Repite tu contraseña" required minlength="6">
       </div>
 
       <button type="submit" class="btn" id="registerBtn">Crear Cuenta</button>
@@ -149,8 +186,9 @@
   <!-- Dashboard (shown after successful login) -->
   <section class="dashboard" id="dashboard" aria-labelledby="welcome-title">
     <div class="welcome-card">
-      <div class="ball-wrap">
-        <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#fff" stroke="#ddd" stroke-width="1.5"/><circle cx="24" cy="24" r="14" fill="none" stroke="#ccc" stroke-width="1" stroke-dasharray="4 2"/><text x="24" y="29" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="bold" fill="#999">★★★</text></svg>
+      <div class="ball-wrap" id="dashboardAvatarWrap">
+        <svg id="dashboardAvatarIcon" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#fff" stroke="#ddd" stroke-width="1.5"/><circle cx="24" cy="24" r="14" fill="none" stroke="#ccc" stroke-width="1" stroke-dasharray="4 2"/><text x="24" y="29" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="bold" fill="#999">★★★</text></svg>
+        <img id="dashboardAvatarImg" class="hidden" alt="Foto de perfil" />
       </div>
       <h1 id="welcome-title">¡Bienvenido de vuelta!</h1>
       <p>Ya iniciaste sesión en Racket Sports GT — Tenis de Mesa.</p>
@@ -165,6 +203,7 @@
 
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script type="module" src="/js/auth.js"></script>
 </body>
 </html>

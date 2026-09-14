@@ -125,6 +125,35 @@
   .field input::placeholder{color:var(--muted); opacity:.7}
   .field input:focus{border-color:var(--focus); box-shadow:0 0 0 3px color-mix(in srgb, var(--focus) 25%, transparent)}
 
+  .visually-hidden{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap}
+
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:.75rem}
+  .optional-tag{text-transform:none; font-weight:400; letter-spacing:0; color:var(--muted); opacity:.85}
+  .field small{font-size:.72rem; color:var(--muted); line-height:1.3}
+
+  .photo-field{display:grid; gap:.5rem}
+  .photo-field-label{font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--muted)}
+  .photo-dropzone{
+    display:grid; place-items:center; gap:.6rem; text-align:center;
+    border:1.5px dashed var(--input-border); border-radius:14px; padding:1.5rem 1rem;
+    background:color-mix(in srgb, var(--input-bg) 60%, transparent);
+  }
+  .photo-preview{
+    width:76px; height:76px; border-radius:50%; overflow:hidden;
+    display:grid; place-items:center; background:var(--accent-weak);
+    border:1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+  .photo-preview svg{width:38px; height:38px; stroke:var(--accent); stroke-width:2; fill:none}
+  .photo-preview img{width:100%; height:100%; object-fit:cover; display:block}
+  .photo-preview .hidden{display:none}
+  .photo-choose-btn{
+    background:var(--accent-weak); color:var(--accent); border:1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    border-radius:8px; padding:.5rem 1rem; font-size:.85rem; font-weight:700; cursor:pointer;
+    transition:filter var(--transition);
+  }
+  .photo-choose-btn:hover{filter:brightness(1.08)}
+  .photo-dropzone small{color:var(--muted)}
+
   .row{display:flex; align-items:center; justify-content:space-between; font-size:.8rem}
   .row a{color:var(--accent); text-decoration:none; font-weight:500; cursor:pointer}
   .row a:hover{text-decoration:underline}
@@ -161,8 +190,10 @@
     padding:1.75rem 1.5rem; backdrop-filter:blur(20px); box-shadow:var(--shadow); text-align:center;
     animation:rise .5s ease-out backwards;
   }
-  .welcome-card .ball-wrap{width:64px; height:64px; margin:0 auto .9rem; display:grid; place-items:center; border-radius:50%; background:var(--accent-weak); border:1px solid color-mix(in srgb, var(--accent) 30%, transparent)}
+  .welcome-card .ball-wrap{width:64px; height:64px; margin:0 auto .9rem; display:grid; place-items:center; border-radius:50%; background:var(--accent-weak); border:1px solid color-mix(in srgb, var(--accent) 30%, transparent); overflow:hidden}
   .welcome-card svg{width:44px; height:44px}
+  .welcome-card .ball-wrap img{width:100%; height:100%; object-fit:cover; border-radius:50%; grid-area:1/1}
+  .welcome-card .ball-wrap img.hidden{display:none}
   .welcome-card h1{font-size:1.2rem; font-weight:800; margin-bottom:.35rem}
   .welcome-card p{font-size:.85rem; color:var(--muted)}
   .welcome-card .user-tag{display:inline-block; margin-top:.75rem; font-size:.75rem; font-weight:700; color:var(--accent); background:var(--accent-weak); border-radius:999px; padding:.3rem .75rem}
@@ -185,6 +216,7 @@
     .login-card{padding:1.5rem 1rem}
     .row{flex-direction:column; align-items:flex-start; gap:.5rem}
     .brand-name{font-size:1.2rem}
+    .field-row{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){
     .mesh span{animation:none}

@@ -17,10 +17,17 @@ module.exports = async (req, res) => {
 
     const supabase = getSupabase();
 
+    // Accept a username, alias, or email as the login identifier. Strip
+    // characters that have special meaning in a PostgREST `.or()` filter
+    // string (`,` `(` `)`) so user input can never break out of the filter.
+    const safeId = cleanId.replace(/[,()]/g, "");
+    if (!safeId) {
+      return res.status(401).json({ error: "Usuario o contraseña incorrectos." });
+    }
     const { data: user, error } = await supabase
       .from("users")
-      .select("id, identifier, display_name, password_hash")
-      .eq("identifier", cleanId)
+      .select("id, email, username, alias, first_name, last_name, display_name, photo_url, password_hash")
+      .or(`username.ilike.${safeId},alias.ilike.${safeId},email.ilike.${safeId}`)
       .maybeSingle();
 
     if (error) throw error;
@@ -33,10 +40,19 @@ module.exports = async (req, res) => {
       return res.status(401).json({ error: "Usuario o contraseña incorrectos." });
     }
 
-    const token = signToken(user);
+    const token = signToken({ id: user.id, identifier: user.email });
     return res.status(200).json({
       token,
-      user: { id: user.id, identifier: user.identifier, displayName: user.display_name },
+      user: {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        alias: user.alias,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        displayName: user.display_name,
+        photoUrl: user.photo_url,
+      },
     });
   } catch (err) {
     console.error("login error:", err);
