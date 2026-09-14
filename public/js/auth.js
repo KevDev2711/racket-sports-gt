@@ -4,7 +4,7 @@
    all three — keeps the "glue" logic in one place and out of the HTML. */
 
 import * as api from './api.js';
-import { setSession, clearSession } from './session.js';
+import { setSession, clearSession, getToken } from './session.js';
 import {
   loginForm, registerForm, loginTabBtn, registerTabBtn,
   forgotLink, logoutBtn, forgotForm, resetForm,
@@ -12,6 +12,12 @@ import {
   photoChooseBtn, registerPhoto,
   showAlert, clearAlert, showLoginTab, showRegisterTab, showForgotTab, showResetTab,
   enterDashboard, exitDashboard, showPhotoPreview, resetPhotoPreview,
+  rankingsTabBtn, historyTabBtn, showRankingsTab, showHistoryTab,
+  renderRankings, renderMatchList, populatePlayerSelects,
+  addMatchBtn, matchModalClose, matchForm, addGameBtn, gamesList, addGameRow, renumberGameRows,
+  resetMatchForm, openMatchModal, closeMatchModal,
+  matchPlayer1, matchPlayer2, matchDateInput, matchSubmitBtn,
+  showDashAlert, clearDashAlert, showModalAlert,
 } from './ui.js';
 
 const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
@@ -27,6 +33,99 @@ backToLoginFromReset.addEventListener('click', showLoginTab);
 logoutBtn.addEventListener('click', () => {
   clearSession();
   exitDashboard();
+});
+
+// ── Dashboard tabs: Rankings / Historial ──
+rankingsTabBtn.addEventListener('click', () => { showRankingsTab(); loadRankings(); });
+historyTabBtn.addEventListener('click', () => { showHistoryTab(); loadMatches(); });
+
+async function loadRankings() {
+  clearDashAlert();
+  try {
+    const { rankings } = await api.getRankings(getToken());
+    renderRankings(rankings);
+  } catch (err) {
+    showDashAlert(err.message, 'error');
+  }
+}
+
+async function loadMatches() {
+  clearDashAlert();
+  try {
+    const { matches } = await api.getMatches(getToken());
+    renderMatchList(matches);
+  } catch (err) {
+    showDashAlert(err.message, 'error');
+  }
+}
+
+// ── Add Match modal ──
+let allPlayers = [];
+
+addMatchBtn.addEventListener('click', async () => {
+  resetMatchForm();
+  gamesList.innerHTML = '';
+  addGameRow(0);
+  matchDateInput.value = new Date().toISOString().slice(0, 10);
+  openMatchModal();
+  try {
+    if (allPlayers.length === 0) {
+      const { players } = await api.getPlayers(getToken());
+      allPlayers = players;
+    }
+    populatePlayerSelects(allPlayers);
+  } catch (err) {
+    showModalAlert(err.message, 'error');
+  }
+});
+
+matchModalClose.addEventListener('click', closeMatchModal);
+document.getElementById('matchModalBackdrop').addEventListener('click', (e) => {
+  if (e.target.id === 'matchModalBackdrop') closeMatchModal();
+});
+addGameBtn.addEventListener('click', () => addGameRow(gamesList.querySelectorAll('.game-row').length));
+
+matchForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const p1 = matchPlayer1.value;
+  const p2 = matchPlayer2.value;
+  const matchDate = matchDateInput.value;
+
+  if (p1 === p2) {
+    showModalAlert('Un jugador no puede jugar contra sí mismo.', 'error');
+    return;
+  }
+
+  const gameRows = Array.from(gamesList.querySelectorAll('.game-row'));
+  if (gameRows.length === 0) {
+    showModalAlert('Agrega al menos un set.', 'error');
+    return;
+  }
+  const games = [];
+  for (const row of gameRows) {
+    const s1 = Number(row.querySelector('.game-p1').value);
+    const s2 = Number(row.querySelector('.game-p2').value);
+    if (Number.isNaN(s1) || Number.isNaN(s2) || s1 === s2) {
+      showModalAlert('Cada set debe tener un marcador válido y sin empates.', 'error');
+      return;
+    }
+    games.push({ player1Score: s1, player2Score: s2 });
+  }
+
+  matchSubmitBtn.disabled = true;
+  matchSubmitBtn.textContent = 'Guardando…';
+  try {
+    await api.createMatch(getToken(), { player1Id: Number(p1), player2Id: Number(p2), matchDate, games });
+    closeMatchModal();
+    showDashAlert('Partido registrado correctamente.', 'success');
+    showHistoryTab();
+    await loadMatches();
+  } catch (err) {
+    showModalAlert(err.message, 'error');
+  } finally {
+    matchSubmitBtn.disabled = false;
+    matchSubmitBtn.textContent = 'Guardar Partido';
+  }
 });
 
 // ── Profile photo picker (register form) ──
@@ -68,6 +167,7 @@ loginForm.addEventListener('submit', async e => {
     setTimeout(() => {
       btn.disabled = false; btn.textContent = 'Iniciar Sesión';
       enterDashboard(data.user);
+      loadRankings();
     }, 500);
   } catch (err) {
     btn.disabled = false; btn.textContent = 'Iniciar Sesión';
@@ -108,6 +208,7 @@ registerForm.addEventListener('submit', async e => {
     setTimeout(() => {
       btn.disabled = false; btn.textContent = 'Crear Cuenta';
       enterDashboard(data.user);
+      loadRankings();
     }, 500);
   } catch (err) {
     btn.disabled = false; btn.textContent = 'Crear Cuenta';

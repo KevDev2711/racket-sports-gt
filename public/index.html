@@ -194,8 +194,77 @@
       <p>Ya iniciaste sesión en Racket Sports GT — Tenis de Mesa.</p>
       <span class="user-tag" id="userTag"></span>
     </div>
+
+    <!-- Dashboard Tabs: Rankings / Match History -->
+    <div class="dash-tabs" role="tablist">
+      <button type="button" class="dash-tab-btn active" id="rankingsTabBtn" role="tab" aria-selected="true">Clasificación</button>
+      <button type="button" class="dash-tab-btn" id="historyTabBtn" role="tab" aria-selected="false">Historial</button>
+    </div>
+
+    <div class="alert" id="dashAlertBox" role="alert"></div>
+
+    <!-- Rankings Panel -->
+    <section class="dash-panel" id="rankingsPanel">
+      <div class="panel-head">
+        <h2>Clasificación</h2>
+        <p class="panel-sub">Ranking por porcentaje de partidos ganados</p>
+      </div>
+      <div class="table-wrap">
+        <table class="rankings-table" id="rankingsTable">
+          <thead>
+            <tr><th>#</th><th>Jugador</th><th>PJ</th><th>G</th><th>P</th><th>% Victorias</th></tr>
+          </thead>
+          <tbody id="rankingsBody"></tbody>
+        </table>
+        <p class="empty-state" id="rankingsEmpty" style="display:none">Todavía no hay partidos registrados.</p>
+      </div>
+    </section>
+
+    <!-- Match History Panel -->
+    <section class="dash-panel hidden" id="historyPanel">
+      <div class="panel-head">
+        <h2>Historial de Partidos</h2>
+        <button type="button" class="btn small" id="addMatchBtn">+ Registrar Partido</button>
+      </div>
+      <div class="match-list" id="matchList"></div>
+      <p class="empty-state" id="matchListEmpty" style="display:none">Todavía no hay partidos registrados.</p>
+    </section>
+
     <button type="button" class="logout-btn" id="logoutBtn">Cerrar Sesión</button>
   </section>
+
+  <!-- Add Match Modal -->
+  <div class="modal-backdrop hidden" id="matchModalBackdrop">
+    <div class="modal" role="dialog" aria-labelledby="matchModalTitle">
+      <div class="modal-head">
+        <h3 id="matchModalTitle">Registrar Partido</h3>
+        <button type="button" class="modal-close" id="matchModalClose" aria-label="Cerrar">&times;</button>
+      </div>
+      <div class="alert" id="matchModalAlert" role="alert"></div>
+      <form id="matchForm" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <label for="matchPlayer1">Jugador 1</label>
+            <select id="matchPlayer1" required></select>
+          </div>
+          <div class="field">
+            <label for="matchPlayer2">Jugador 2</label>
+            <select id="matchPlayer2" required></select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="matchDate">Fecha</label>
+          <input type="date" id="matchDate" required>
+        </div>
+        <div class="field">
+          <label>Sets (marcador de cada set)</label>
+          <div id="gamesList"></div>
+          <button type="button" class="btn small ghost" id="addGameBtn">+ Agregar Set</button>
+        </div>
+        <button type="submit" class="btn" id="matchSubmitBtn">Guardar Partido</button>
+      </form>
+    </div>
+  </div>
 
   <footer class="footer">
     Hecho en <strong>Guatemala</strong> · Racket Sports GT v1.0 · Tenis de Mesa

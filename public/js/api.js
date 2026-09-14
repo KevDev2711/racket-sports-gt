@@ -29,6 +29,17 @@ async function apiRequest(path, options = {}) {
   return data;
 }
 
+/** Same as apiRequest, but attaches the current session's Bearer token. */
+async function authedRequest(path, token, options = {}) {
+  return apiRequest(path, {
+    ...options,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      ...(options.headers || {}),
+    },
+  });
+}
+
 export function login(identifier, password) {
   return apiRequest('/api/auth/login', {
     method: 'POST',
@@ -69,5 +80,28 @@ export function confirmPasswordReset(token, password) {
   return apiRequest('/api/auth/confirm-reset', {
     method: 'POST',
     body: JSON.stringify({ token, password }),
+  });
+}
+
+/** Registered players, for opponent pickers. */
+export function getPlayers(sessionToken) {
+  return authedRequest('/api/players', sessionToken);
+}
+
+/** Win/loss/win% leaderboard. */
+export function getRankings(sessionToken) {
+  return authedRequest('/api/rankings', sessionToken);
+}
+
+/** Match history, newest first. */
+export function getMatches(sessionToken) {
+  return authedRequest('/api/matches', sessionToken);
+}
+
+/** Record a new match: { player1Id, player2Id, matchDate, games: [{player1Score, player2Score}, ...] } */
+export function createMatch(sessionToken, payload) {
+  return authedRequest('/api/matches', sessionToken, {
+    method: 'POST',
+    body: JSON.stringify(payload),
   });
 }

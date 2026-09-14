@@ -24,7 +24,7 @@
     min-height:100dvh; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;
     color:var(--ink); line-height:1.5;
     display:grid; place-items:center; padding:1.5rem;
-    background:var(--bg); overflow:hidden; position:relative;
+    background:var(--bg); overflow-x:hidden; overflow-y:auto; position:relative;
   }
 
   /* ─── Animated Mesh Background ─── */
@@ -65,7 +65,8 @@
   }
 
   /* ─── Layout Wrapper ─── */
-  .shell{position:relative; z-index:2; width:100%; max-width:420px; display:grid; gap:1.25rem}
+  .shell{position:relative; z-index:2; width:100%; max-width:420px; display:grid; gap:1.25rem; transition:max-width var(--transition)}
+  .shell.wide{max-width:640px}
 
   /* ─── Header: Brand + GT Badge ─── */
   .brand-header{display:flex; align-items:center; justify-content:space-between; padding:0 .25rem}
@@ -117,13 +118,14 @@
   .form.hidden{display:none}
   .field{display:grid; gap:.4rem}
   .field label{font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--muted)}
-  .field input{
+  .field input, .field select{
     width:100%; background:var(--input-bg); border:1px solid var(--input-border); border-radius:10px;
     padding:.85rem 1rem; font-size:1rem; color:var(--ink); outline:none;
     transition:border-color var(--transition), box-shadow var(--transition);
   }
+  .field select{appearance:auto}
   .field input::placeholder{color:var(--muted); opacity:.7}
-  .field input:focus{border-color:var(--focus); box-shadow:0 0 0 3px color-mix(in srgb, var(--focus) 25%, transparent)}
+  .field input:focus, .field select:focus{border-color:var(--focus); box-shadow:0 0 0 3px color-mix(in srgb, var(--focus) 25%, transparent)}
 
   .visually-hidden{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap}
 
@@ -203,6 +205,85 @@
     transition:background var(--transition), border-color var(--transition);
   }
   .logout-btn:hover{background:var(--input-bg); border-color:var(--danger)}
+
+  /* ─── Dashboard Tabs (Rankings / Historial) ─── */
+  .dash-tabs{display:flex; gap:.4rem; background:var(--input-bg); border:1px solid var(--input-border); border-radius:12px; padding:.3rem}
+  .dash-tab-btn{
+    flex:1; border:none; background:transparent; color:var(--muted); font-weight:700; font-size:.85rem;
+    padding:.65rem .5rem; border-radius:9px; cursor:pointer; transition:background var(--transition), color var(--transition);
+  }
+  .dash-tab-btn.active{background:var(--accent); color:#fff}
+
+  /* ─── Dashboard Panels ─── */
+  .dash-panel{
+    background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius);
+    padding:1.25rem; backdrop-filter:blur(20px); box-shadow:var(--shadow); animation:rise .4s ease-out backwards;
+  }
+  .dash-panel.hidden{display:none}
+  .panel-head{display:flex; align-items:center; justify-content:space-between; gap:.75rem; margin-bottom:1rem; flex-wrap:wrap}
+  .panel-head h2{font-size:1.05rem; font-weight:800}
+  .panel-sub{font-size:.78rem; color:var(--muted)}
+  .empty-state{text-align:center; color:var(--muted); font-size:.85rem; padding:1.5rem 0}
+
+  /* ─── Rankings Table ─── */
+  .table-wrap{overflow-x:auto}
+  .rankings-table{width:100%; border-collapse:collapse; font-size:.85rem}
+  .rankings-table th{
+    text-align:left; color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.03em;
+    padding:.5rem .6rem; border-bottom:1px solid var(--card-border);
+  }
+  .rankings-table td{padding:.65rem .6rem; border-bottom:1px solid var(--card-border); white-space:nowrap}
+  .rankings-table tr:last-child td{border-bottom:none}
+  .rankings-table .rank-player{display:flex; align-items:center; gap:.5rem; font-weight:700}
+  .rankings-table .rank-avatar{width:28px; height:28px; border-radius:50%; object-fit:cover; background:var(--accent-weak); flex-shrink:0}
+  .rankings-table .rank-pos{font-weight:800; color:var(--muted)}
+  .rankings-table .rank-pos.top{color:var(--accent)}
+  .rankings-table .winpct{font-weight:800; color:var(--accent)}
+
+  /* ─── Match History List ─── */
+  .match-list{display:grid; gap:.65rem}
+  .match-card{
+    border:1px solid var(--card-border); border-radius:12px; padding:.85rem 1rem; background:var(--input-bg);
+  }
+  .match-card .match-date{font-size:.72rem; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.03em; margin-bottom:.5rem}
+  .match-card .match-players{display:flex; align-items:center; justify-content:space-between; gap:.75rem}
+  .match-card .match-side{display:flex; align-items:center; gap:.5rem; flex:1; min-width:0}
+  .match-card .match-side.winner .match-name{color:var(--accent); font-weight:800}
+  .match-card .match-side.right{flex-direction:row-reverse; text-align:right}
+  .match-card .match-avatar{width:32px; height:32px; border-radius:50%; object-fit:cover; background:var(--accent-weak); flex-shrink:0}
+  .match-card .match-name{font-size:.85rem; font-weight:600; overflow:hidden; text-overflow:ellipsis}
+  .match-card .match-score{font-size:1.3rem; font-weight:800; padding:0 .5rem; flex-shrink:0}
+  .match-card .match-vs{font-size:.75rem; color:var(--muted); font-weight:700; padding:0 .25rem; flex-shrink:0}
+  .match-card .match-games{display:flex; gap:.4rem; margin-top:.6rem; flex-wrap:wrap}
+  .match-card .match-game-pill{
+    font-size:.7rem; color:var(--muted); background:var(--card); border:1px solid var(--card-border);
+    border-radius:999px; padding:.2rem .55rem;
+  }
+
+  /* ─── Add Match Modal ─── */
+  .modal-backdrop{
+    position:fixed; inset:0; z-index:50; background:rgba(0,0,0,.55); display:grid; place-items:center; padding:1.25rem;
+    backdrop-filter:blur(2px);
+  }
+  .modal-backdrop.hidden{display:none}
+  .modal{
+    width:100%; max-width:440px; max-height:90vh; overflow-y:auto; background:var(--card); border:1px solid var(--card-border);
+    border-radius:var(--radius); padding:1.5rem; box-shadow:var(--shadow); animation:rise .3s ease-out backwards;
+  }
+  .modal-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem}
+  .modal-head h3{font-size:1.05rem; font-weight:800}
+  .modal-close{background:transparent; border:none; color:var(--muted); font-size:1.5rem; line-height:1; cursor:pointer; padding:0 .25rem}
+  .modal-close:hover{color:var(--ink)}
+  .game-row{display:grid; grid-template-columns:2.6rem 1fr 1fr 2.2rem; align-items:center; gap:.5rem; margin-bottom:.5rem}
+  .game-row span{font-size:.75rem; color:var(--muted); font-weight:700}
+  .game-row input{width:100%; text-align:center; min-width:0}
+  .game-row .game-remove{
+    background:transparent; border:1px solid var(--card-border); color:var(--danger); border-radius:8px;
+    width:2.2rem; height:2.2rem; flex-shrink:0; cursor:pointer; font-size:1rem;
+  }
+  .btn.small{padding:.55rem .9rem; font-size:.78rem; width:auto}
+  .btn.small.ghost{background:transparent; border:1px solid var(--input-border); color:var(--ink); margin-top:.25rem}
+  .btn.small.ghost:hover{border-color:var(--accent); color:var(--accent)}
 
   /* ─── Footer ─── */
   .footer{text-align:center; font-size:.65rem; color:var(--muted); padding-top:.5rem; opacity:.8}
