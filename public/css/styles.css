@@ -308,7 +308,7 @@
 /* Score rows: compact inputs aligned to the right */
 .game-row {
   display: grid;
-  grid-template-columns: 68px 1fr 118px 118px 34px;
+  grid-template-columns: 45px 1fr 118px 118px 34px;
   gap: 8px;
   align-items: center;
 }
@@ -330,10 +330,10 @@
   opacity: 0.75;
 }
 .game-row .game-p1 {
-  grid-column: 3;
+  grid-column: 5;
 }
 .game-row .game-p2 {
-  grid-column: 4;
+  grid-column: 5;
 }
 .game-row .game-remove {
   grid-column: 5;
