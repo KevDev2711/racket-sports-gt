@@ -98,7 +98,7 @@ body {
   line-height: 1.5;
   display: grid;
   place-items: center;
-  padding: 1.5rem;
+  padding: var(--space-6);
   background: var(--bg);
   overflow-x: hidden;
   overflow-y: auto;
@@ -227,7 +227,7 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0.25rem;
+  padding: 0 var(--space-1);
 }
 
 .brand {
@@ -287,7 +287,7 @@ body::before {
   background: var(--gt-weak);
   color: var(--gt);
   border: 1px solid var(--gt-border);
-  padding: 0.3rem 0.6rem;
+  padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-full);
   font-size: 0.65rem;
   font-weight: 700;
@@ -307,7 +307,7 @@ body::before {
   background: var(--card);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
-  padding: 0.85rem 1rem;
+  padding: var(--space-3) var(--space-4);
   backdrop-filter: blur(12px);
 }
 
@@ -351,7 +351,7 @@ body::before {
   background: var(--card);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
-  padding: 2rem 1.5rem;
+  padding: var(--space-7) var(--space-6);
   backdrop-filter: blur(20px);
   box-shadow: var(--shadow);
   animation: rise 0.6s ease-out backwards;
@@ -366,7 +366,7 @@ body::before {
   background: var(--input-bg);
   border: 1px solid var(--input-border);
   border-radius: var(--radius-md);
-  padding: 0.25rem;
+  padding: var(--space-1);
   margin-bottom: var(--space-5);
 }
 
@@ -376,7 +376,7 @@ body::before {
   color: var(--muted);
   font-size: 0.85rem;
   font-weight: 700;
-  padding: 0.55rem 0.5rem;
+  padding: var(--space-2);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition:
@@ -419,7 +419,7 @@ body::before {
   background: var(--input-bg);
   border: 1px solid var(--input-border);
   border-radius: var(--radius-md);
-  padding: 0.85rem 1rem;
+  padding: var(--space-3) var(--space-4);
   font-size: 1rem;
   color: var(--ink);
   outline: none;
@@ -483,7 +483,7 @@ body::before {
   text-align: center;
   border: 1.5px dashed var(--input-border);
   border-radius: var(--radius-lg);
-  padding: 1.5rem 1rem;
+  padding: var(--space-6) var(--space-4);
   background: color-mix(in srgb, var(--input-bg) 60%, transparent);
 }
 
@@ -522,7 +522,7 @@ body::before {
   color: var(--accent);
   border: 1px solid var(--accent-border);
   border-radius: var(--radius-sm);
-  padding: 0.5rem 1rem;
+  padding: var(--space-2) var(--space-4);
   font-size: 0.85rem;
   font-weight: 700;
   cursor: pointer;
@@ -592,13 +592,13 @@ body::before {
 /* --- Buttons --- */
 
 .btn {
-  margin-top: 0.5rem;
+  margin-top: var(--space-2);
   width: 100%;
   background: linear-gradient(135deg, var(--accent), var(--gt));
   color: #04200c;
   border: none;
   border-radius: var(--radius-md);
-  padding: 0.9rem 1rem;
+  padding: var(--space-3) var(--space-4);
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
@@ -633,7 +633,7 @@ body::before {
   border: 1px solid var(--card-border);
   color: var(--ink);
   border-radius: var(--radius-md);
-  padding: 0.8rem 1rem;
+  padding: var(--space-3) var(--space-4);
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
@@ -648,7 +648,7 @@ body::before {
 }
 
 .btn.small {
-  padding: 0.55rem 0.9rem;
+  padding: var(--space-2) var(--space-4);
   font-size: 0.78rem;
   width: auto;
 }
@@ -672,7 +672,7 @@ body::before {
   font-size: 0.8rem;
   font-weight: 600;
   border-radius: var(--radius-md);
-  padding: 0.65rem 0.85rem;
+  padding: var(--space-3);
   border: 1px solid transparent;
 }
 
@@ -708,7 +708,7 @@ body::before {
   background: var(--card);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
-  padding: 1.75rem 1.5rem;
+  padding: var(--space-7) var(--space-6);
   backdrop-filter: blur(20px);
   box-shadow: var(--shadow);
   text-align: center;
@@ -763,7 +763,7 @@ body::before {
   color: var(--accent);
   background: var(--accent-weak);
   border-radius: var(--radius-full);
-  padding: 0.3rem 0.75rem;
+  padding: var(--space-1) var(--space-3);
 }
 
 /* --- Dashboard tabs (rankings / history) --- */
@@ -774,7 +774,7 @@ body::before {
   background: var(--input-bg);
   border: 1px solid var(--input-border);
   border-radius: var(--radius-md);
-  padding: 0.3rem;
+  padding: var(--space-1);
 }
 
 .dash-tab-btn {
@@ -784,7 +784,7 @@ body::before {
   color: var(--muted);
   font-weight: 700;
   font-size: 0.85rem;
-  padding: 0.65rem 0.5rem;
+  padding: var(--space-3) var(--space-2);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition:
@@ -803,7 +803,7 @@ body::before {
   background: var(--card);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
-  padding: 1.25rem;
+  padding: var(--space-5);
   backdrop-filter: blur(20px);
   box-shadow: var(--shadow);
   animation: rise 0.4s ease-out backwards;
@@ -836,7 +836,7 @@ body::before {
   text-align: center;
   color: var(--muted);
   font-size: 0.85rem;
-  padding: 1.5rem 0;
+  padding: var(--space-6) 0;
 }
 
 /* --- Rankings table --- */
@@ -858,12 +858,12 @@ body::before {
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  padding: 0.5rem 0.6rem;
+  padding: var(--space-2);
   border-bottom: 1px solid var(--card-border);
 }
 
 .rankings-table td {
-  padding: 0.65rem 0.6rem;
+  padding: var(--space-3) var(--space-2);
   border-bottom: 1px solid var(--card-border);
   white-space: nowrap;
 }
@@ -913,7 +913,7 @@ body::before {
 .match-card {
   border: 1px solid var(--card-border);
   border-radius: var(--radius-md);
-  padding: 0.85rem 1rem;
+  padding: var(--space-3) var(--space-4);
   background: var(--input-bg);
 }
 
@@ -971,7 +971,7 @@ body::before {
 .match-card .match-score {
   font-size: 1.3rem;
   font-weight: 800;
-  padding: 0 0.5rem;
+  padding: 0 var(--space-2);
   flex-shrink: 0;
 }
 
@@ -979,7 +979,7 @@ body::before {
   font-size: 0.75rem;
   color: var(--muted);
   font-weight: 700;
-  padding: 0 0.25rem;
+  padding: 0 var(--space-1);
   flex-shrink: 0;
 }
 
@@ -996,7 +996,7 @@ body::before {
   background: var(--card);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-full);
-  padding: 0.2rem 0.55rem;
+  padding: var(--space-1) var(--space-2);
 }
 
 /* --- Add match modal --- */
@@ -1015,7 +1015,7 @@ body::before {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   place-items: center;
-  padding: 1.25rem;
+  padding: var(--space-5);
   backdrop-filter: blur(2px);
 }
 
@@ -1031,7 +1031,7 @@ body::before {
   background: var(--card);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
+  padding: var(--space-6);
   box-shadow: var(--shadow);
   animation: rise 0.3s ease-out backwards;
 }
@@ -1055,7 +1055,7 @@ body::before {
   font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
-  padding: 0 0.25rem;
+  padding: 0 var(--space-1);
 }
 
 .modal-close:hover {
@@ -1083,7 +1083,7 @@ body::before {
   width: 100%;
   text-align: center;
   min-width: 0;
-  padding: 0 8px;
+  padding: 0 var(--space-2);
   font-size: 0.875rem;
   height: 2.2rem;
 }
@@ -1111,7 +1111,7 @@ body::before {
   text-align: center;
   font-size: 0.65rem;
   color: var(--muted);
-  padding-top: 0.5rem;
+  padding-top: var(--space-2);
   opacity: 0.8;
 }
 
@@ -1140,7 +1140,7 @@ body::before {
 
 @media (max-width: 360px) {
   .login-card {
-    padding: 1.5rem 1rem;
+    padding: var(--space-6) var(--space-4);
   }
 
   .row {
