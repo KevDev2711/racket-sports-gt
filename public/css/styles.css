@@ -367,7 +367,7 @@ body::before {
   border: 1px solid var(--input-border);
   border-radius: var(--radius-md);
   padding: 0.25rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: var(--space-5);
 }
 
 .tab-btn {
@@ -573,7 +573,7 @@ body::before {
 
 .signup {
   text-align: center;
-  margin-top: 1.25rem;
+  margin-top: var(--space-5);
   font-size: 0.85rem;
   color: var(--muted);
 }
@@ -657,7 +657,7 @@ body::before {
   background: transparent;
   border: 1px solid var(--input-border);
   color: var(--ink);
-  margin-top: 0.25rem;
+  margin-top: var(--space-1);
 }
 
 .btn.small.ghost:hover {
@@ -718,7 +718,7 @@ body::before {
 .welcome-card .ball-wrap {
   width: 64px;
   height: 64px;
-  margin: 0 auto 0.9rem;
+  margin: 0 auto var(--space-4);
   display: grid;
   place-items: center;
   border-radius: var(--radius-circle);
@@ -747,7 +747,7 @@ body::before {
 .welcome-card h1 {
   font-size: 1.2rem;
   font-weight: 800;
-  margin-bottom: 0.35rem;
+  margin-bottom: var(--space-1);
 }
 
 .welcome-card p {
@@ -757,7 +757,7 @@ body::before {
 
 .welcome-card .user-tag {
   display: inline-block;
-  margin-top: 0.75rem;
+  margin-top: var(--space-3);
   font-size: 0.75rem;
   font-weight: 700;
   color: var(--accent);
@@ -818,7 +818,7 @@ body::before {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
   flex-wrap: wrap;
 }
 
@@ -923,7 +923,7 @@ body::before {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
 .match-card .match-players {
@@ -986,7 +986,7 @@ body::before {
 .match-card .match-games {
   display: flex;
   gap: var(--space-2);
-  margin-top: 0.6rem;
+  margin-top: var(--space-3);
   flex-wrap: wrap;
 }
 
@@ -1040,7 +1040,7 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
 }
 
 .modal-head h3 {
@@ -1066,7 +1066,7 @@ body::before {
   display: grid;
   align-items: center;
   gap: var(--space-2);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
   grid-template-columns: 52px repeat(2, minmax(0, 1fr)) 34px;
 }
 
