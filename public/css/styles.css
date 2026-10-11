@@ -221,6 +221,19 @@ body::before {
 
 /* === 5. Components === */
 
+/* --- Cards --- */
+
+.login-card,
+.welcome-card,
+.dash-panel,
+.modal {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(20px);
+}
+
 /* --- Brand and header --- */
 
 .brand-header {
@@ -348,12 +361,7 @@ body::before {
 /* --- Login card --- */
 
 .login-card {
-  background: var(--card);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-lg);
   padding: var(--space-7) var(--space-6);
-  backdrop-filter: blur(20px);
-  box-shadow: var(--shadow);
   animation: rise 0.6s ease-out backwards;
 }
 
@@ -705,12 +713,7 @@ body::before {
 }
 
 .welcome-card {
-  background: var(--card);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-lg);
   padding: var(--space-7) var(--space-6);
-  backdrop-filter: blur(20px);
-  box-shadow: var(--shadow);
   text-align: center;
   animation: rise 0.5s ease-out backwards;
 }
@@ -800,12 +803,7 @@ body::before {
 /* --- Dashboard panels --- */
 
 .dash-panel {
-  background: var(--card);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-lg);
   padding: var(--space-5);
-  backdrop-filter: blur(20px);
-  box-shadow: var(--shadow);
   animation: rise 0.4s ease-out backwards;
 }
 
@@ -1028,11 +1026,7 @@ body::before {
   max-width: 440px;
   max-height: 90vh;
   overflow-y: auto;
-  background: var(--card);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-lg);
   padding: var(--space-6);
-  box-shadow: var(--shadow);
   animation: rise 0.3s ease-out backwards;
 }
 
