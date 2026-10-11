@@ -16,6 +16,10 @@
   --danger: #f87171;
   --danger-weak: #3f1212;
 
+  /* Decoration */
+  --volcano-opacity: 0.06;
+  --grid-line: rgba(255, 255, 255, 0.015);
+
   /* Borders */
   --accent-border: color-mix(in srgb, var(--accent) 30%, transparent);
   --gt-border: color-mix(in srgb, var(--gt) 30%, transparent);
@@ -30,9 +34,14 @@
   --radius-full: 999px;
   --radius-circle: 50%;
 
-  /* Decoration */
-  --volcano-opacity: 0.06;
-  --grid-line: rgba(255, 255, 255, 0.015);
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 2rem;
 }
 @media (prefers-color-scheme: light) {
   :root {
