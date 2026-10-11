@@ -3,21 +3,32 @@
 :root {
   --bg: #0a0f14;
   --card: rgba(22, 27, 34, 0.9);
-  --card-border: rgba(255, 255, 255, 0.08);
   --ink: #f0f2f5;
   --muted: #8b919a;
   --accent: #22c55e;
   --accent-weak: #052e16;
   --input-bg: rgba(10, 14, 18, 0.9);
-  --input-border: rgba(255, 255, 255, 0.12);
   --focus: #22c55e;
   --shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.6);
-  --radius: 16px;
   --transition: 0.25s ease;
   --gt: #00a859;
   --gt-weak: #052e1a;
   --danger: #f87171;
   --danger-weak: #3f1212;
+
+  /* Borders */
+  --accent-border: color-mix(in srgb, var(--accent) 30%, transparent);
+  --gt-border: color-mix(in srgb, var(--gt) 30%, transparent);
+  --danger-border: color-mix(in srgb, var(--danger) 30%, transparent);
+  --input-border: rgba(255, 255, 255, 0.12);
+  --card-border: rgba(255, 255, 255, 0.08);
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+  --radius-circle: 50%;
 
   /* Decoration */
   --volcano-opacity: 0.06;
@@ -27,13 +38,11 @@
   :root {
     --bg: #f0f4f8;
     --card: rgba(255, 255, 255, 0.95);
-    --card-border: rgba(15, 23, 42, 0.1);
     --ink: #0f172a;
     --muted: #475569;
     --accent: #16a34a;
     --accent-weak: #dcfce7;
     --input-bg: #fff;
-    --input-border: rgba(15, 23, 42, 0.15);
     --focus: #15803d;
     --shadow: 0 20px 50px -15px rgba(15, 23, 42, 0.25);
     --gt: #007a3d;
@@ -44,6 +53,10 @@
     /* Decoration */
     --volcano-opacity: 0.04;
     --grid-line: rgba(15, 23, 42, 0.03);
+
+    /* Borders */
+    --input-border: rgba(15, 23, 42, 0.15);
+    --card-border: rgba(15, 23, 42, 0.1);
   }
 }
 
@@ -94,7 +107,7 @@ body {
 }
 .mesh span {
   position: absolute;
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   filter: blur(120px);
   opacity: 0.5;
   animation: float 20s infinite ease-in-out;
@@ -219,7 +232,7 @@ body::before {
 .brand-logo {
   width: 44px;
   height: 44px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   background: linear-gradient(135deg, var(--accent), var(--gt));
   display: grid;
   place-items: center;
@@ -264,9 +277,9 @@ body::before {
   gap: 0.35rem;
   background: var(--gt-weak);
   color: var(--gt);
-  border: 1px solid color-mix(in srgb, var(--gt) 30%, transparent);
+  border: 1px solid var(--gt-border);
   padding: 0.3rem 0.6rem;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   font-size: 0.65rem;
   font-weight: 700;
 }
@@ -284,7 +297,7 @@ body::before {
   gap: 0.75rem;
   background: var(--card);
   border: 1px solid var(--card-border);
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   padding: 0.85rem 1rem;
   backdrop-filter: blur(12px);
 }
@@ -294,9 +307,9 @@ body::before {
   height: 44px;
   display: grid;
   place-items: center;
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   background: var(--accent-weak);
-  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border: 1px solid var(--accent-border);
   flex: 0 0 auto;
 }
 
@@ -328,7 +341,7 @@ body::before {
 .login-card {
   background: var(--card);
   border: 1px solid var(--card-border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   padding: 2rem 1.5rem;
   backdrop-filter: blur(20px);
   box-shadow: var(--shadow);
@@ -343,7 +356,7 @@ body::before {
   gap: 0.4rem;
   background: var(--input-bg);
   border: 1px solid var(--input-border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 0.25rem;
   margin-bottom: 1.25rem;
 }
@@ -355,7 +368,7 @@ body::before {
   font-size: 0.85rem;
   font-weight: 700;
   padding: 0.55rem 0.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition:
     background var(--transition),
@@ -396,7 +409,7 @@ body::before {
   width: 100%;
   background: var(--input-bg);
   border: 1px solid var(--input-border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 0.85rem 1rem;
   font-size: 1rem;
   color: var(--ink);
@@ -460,7 +473,7 @@ body::before {
   gap: 0.6rem;
   text-align: center;
   border: 1.5px dashed var(--input-border);
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   padding: 1.5rem 1rem;
   background: color-mix(in srgb, var(--input-bg) 60%, transparent);
 }
@@ -468,12 +481,12 @@ body::before {
 .photo-preview {
   width: 76px;
   height: 76px;
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   overflow: hidden;
   display: grid;
   place-items: center;
   background: var(--accent-weak);
-  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border: 1px solid var(--accent-border);
 }
 
 .photo-preview svg {
@@ -498,8 +511,8 @@ body::before {
 .photo-choose-btn {
   background: var(--accent-weak);
   color: var(--accent);
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
-  border-radius: 8px;
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
   padding: 0.5rem 1rem;
   font-size: 0.85rem;
   font-weight: 700;
@@ -575,7 +588,7 @@ body::before {
   background: linear-gradient(135deg, var(--accent), var(--gt));
   color: #04200c;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 0.9rem 1rem;
   font-size: 1rem;
   font-weight: 700;
@@ -610,7 +623,7 @@ body::before {
   background: transparent;
   border: 1px solid var(--card-border);
   color: var(--ink);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 0.8rem 1rem;
   font-size: 0.9rem;
   font-weight: 600;
@@ -649,7 +662,7 @@ body::before {
   display: none;
   font-size: 0.8rem;
   font-weight: 600;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 0.65rem 0.85rem;
   border: 1px solid transparent;
 }
@@ -661,13 +674,13 @@ body::before {
 .alert.error {
   background: var(--danger-weak);
   color: var(--danger);
-  border-color: color-mix(in srgb, var(--danger) 35%, transparent);
+  border-color: var(--danger-border);
 }
 
 .alert.success {
   background: var(--accent-weak);
   color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  border-color: var(--accent-border);
 }
 
 /* --- Dashboard (post-login) --- */
@@ -685,7 +698,7 @@ body::before {
 .welcome-card {
   background: var(--card);
   border: 1px solid var(--card-border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   padding: 1.75rem 1.5rem;
   backdrop-filter: blur(20px);
   box-shadow: var(--shadow);
@@ -699,9 +712,9 @@ body::before {
   margin: 0 auto 0.9rem;
   display: grid;
   place-items: center;
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   background: var(--accent-weak);
-  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border: 1px solid var(--accent-border);
   overflow: hidden;
 }
 
@@ -714,7 +727,7 @@ body::before {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   grid-area: 1/1;
 }
 
@@ -740,7 +753,7 @@ body::before {
   font-weight: 700;
   color: var(--accent);
   background: var(--accent-weak);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 0.3rem 0.75rem;
 }
 
@@ -751,7 +764,7 @@ body::before {
   gap: 0.4rem;
   background: var(--input-bg);
   border: 1px solid var(--input-border);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 0.3rem;
 }
 
@@ -763,7 +776,7 @@ body::before {
   font-weight: 700;
   font-size: 0.85rem;
   padding: 0.65rem 0.5rem;
-  border-radius: 9px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition:
     background var(--transition),
@@ -780,7 +793,7 @@ body::before {
 .dash-panel {
   background: var(--card);
   border: 1px solid var(--card-border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   padding: 1.25rem;
   backdrop-filter: blur(20px);
   box-shadow: var(--shadow);
@@ -860,7 +873,7 @@ body::before {
 .rankings-table .rank-avatar {
   width: 28px;
   height: 28px;
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   object-fit: cover;
   background: var(--accent-weak);
   flex-shrink: 0;
@@ -889,7 +902,7 @@ body::before {
 
 .match-card {
   border: 1px solid var(--card-border);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 0.85rem 1rem;
   background: var(--input-bg);
 }
@@ -931,7 +944,7 @@ body::before {
 .match-card .match-avatar {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   object-fit: cover;
   background: var(--accent-weak);
   flex-shrink: 0;
@@ -972,7 +985,7 @@ body::before {
   color: var(--muted);
   background: var(--card);
   border: 1px solid var(--card-border);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 0.2rem 0.55rem;
 }
 
@@ -1007,7 +1020,7 @@ body::before {
   overflow-y: auto;
   background: var(--card);
   border: 1px solid var(--card-border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   padding: 1.5rem;
   box-shadow: var(--shadow);
   animation: rise 0.3s ease-out backwards;
@@ -1074,7 +1087,7 @@ body::before {
   background: transparent;
   border: 1px solid var(--card-border);
   color: var(--danger);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   width: 100%;
   height: 2.2rem;
   flex-shrink: 0;
