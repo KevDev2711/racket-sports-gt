@@ -246,6 +246,16 @@ body::before {
   color: var(--muted);
 }
 
+/* --- Hidden states --- */
+
+.form.hidden,
+.photo-preview .hidden,
+.welcome-card .ball-wrap img.hidden,
+.dash-panel.hidden,
+.modal-backdrop.hidden {
+  display: none;
+}
+
 /* --- Brand and header --- */
 
 .brand-header {
@@ -416,10 +426,6 @@ body::before {
   gap: var(--space-4);
 }
 
-.form.hidden {
-  display: none;
-}
-
 .field {
   display: grid;
   gap: var(--space-2);
@@ -515,10 +521,6 @@ body::before {
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-.photo-preview .hidden {
-  display: none;
 }
 
 .photo-choose-btn {
@@ -739,10 +741,6 @@ body::before {
   grid-area: 1/1;
 }
 
-.welcome-card .ball-wrap img.hidden {
-  display: none;
-}
-
 .welcome-card h1 {
   font-size: 1.2rem;
   font-weight: 800;
@@ -801,10 +799,6 @@ body::before {
 .dash-panel {
   padding: var(--space-5);
   animation: rise 0.4s ease-out backwards;
-}
-
-.dash-panel.hidden {
-  display: none;
 }
 
 .panel-head {
@@ -1011,10 +1005,6 @@ body::before {
   place-items: center;
   padding: var(--space-5);
   backdrop-filter: blur(2px);
-}
-
-.modal-backdrop.hidden {
-  display: none;
 }
 
 .modal {
